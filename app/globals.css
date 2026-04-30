@@ -3,8 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
+  --background: #0c0c0e;
+  --foreground: #f0f0f3;
+  --charcoal-950: #0c0c0e;
+  --charcoal-900: #121215;
+  --charcoal-800: #1a1a1f;
+  --charcoal-700: #22222a;
+  --charcoal-600: #2c2c36;
+  --charcoal-400: #6b6b7e;
+  --charcoal-300: #9898aa;
+  --charcoal-200: #c4c4d0;
+  --charcoal-100: #f0f0f3;
+  --orange-600: #c94a14;
+  --orange-500: #f05c1e;
+  --orange-400: #f47040;
+  --orange-300: #f7906a;
 }
 
 * {
@@ -18,41 +31,76 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--charcoal-950);
+  color: var(--charcoal-100);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .font-inter {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-}
-
-/* Subtle gradient backgrounds */
+/* Grid background */
 .bg-grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 52px 52px;
 }
 
-/* Orange glow for hero accent */
+/* Radial fade masks */
+.fade-radial {
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+}
+
+/* Orange glow blob */
+.glow-blob {
+  background: radial-gradient(circle at center, rgba(240, 92, 30, 0.14) 0%, transparent 70%);
+  filter: blur(1px);
+}
+
+/* Orange glow on elements */
 .glow-orange {
-  box-shadow: 0 0 60px 20px rgba(249, 115, 22, 0.08);
+  box-shadow: 0 0 0 1px rgba(240, 92, 30, 0.35), 0 4px 24px rgba(240, 92, 30, 0.12);
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--charcoal-900); }
+::-webkit-scrollbar-thumb { background: var(--charcoal-600); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--orange-600); }
+
+/* Input resets */
+input:focus { outline: none; }
+
+/* Terminal window chrome */
+.terminal-chrome {
+  background: #0e0e11;
+  border: 1px solid var(--charcoal-600);
+  border-radius: 12px;
 }
-::-webkit-scrollbar-track {
-  background: #18181b;
+
+/* Gradient border card trick */
+.gradient-border {
+  position: relative;
+  background: var(--charcoal-800);
+  border-radius: 14px;
 }
-::-webkit-scrollbar-thumb {
-  background: #3f3f46;
-  border-radius: 3px;
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(240,92,30,0.4) 0%, rgba(240,92,30,0.05) 50%, rgba(240,92,30,0.15) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
+
+@layer utilities {
+  .font-inter { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  .text-orange { color: var(--orange-500); }
+  .bg-orange { background-color: var(--orange-500); }
+  .tracking-snug { letter-spacing: -0.025em; }
 }
